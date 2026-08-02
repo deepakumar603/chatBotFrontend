@@ -1,0 +1,20 @@
+<div class="chatbot-screen">
+	<header class="chatbot-header">Chatbot</header>
+
+	<div class="chatbot-messages" role="log" aria-live="polite">
+		<div *ngFor="let m of messages" class="message" [class.user]="m.from === 'user'" [class.bot]="m.from === 'bot'">
+			<div class="bubble" [innerHTML]="formatMessage(m.text)"></div>
+		</div>
+
+		<div *ngIf="loading" class="loading-row">
+			<div class="loading-dot"></div>
+			<div class="loading-dot"></div>
+			<div class="loading-dot"></div>
+		</div>
+	</div>
+
+	<form class="chatbot-input" (ngSubmit)="send()">
+		<input name="chatMessage" type="text" placeholder="Type a message..." autocomplete="off" [(ngModel)]="messageText" [disabled]="loading" />
+		<button type="submit" [disabled]="loading || !messageText.trim()">{{ loading ? 'Waiting...' : 'Send' }}</button>
+	</form>
+</div>
