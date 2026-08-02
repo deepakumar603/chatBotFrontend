@@ -23,6 +23,47 @@
 .chatbot-messages
 	padding: 16px
 	flex: 1 1 auto
+	min-height: 0
+	overflow-y: auto
+	display: flex
+	flex-direction: column
+	gap: 10px
+
+.chatbot-footer
+	margin-top: auto
+	display: flex
+	flex-wrap: wrap
+	align-items: flex-end
+	gap: 0.75rem
+	padding: 0 16px 16px
+
+.chatbot-footer > div
+	flex: 0 0 220px
+
+.chatbot-footer .chatbot-input
+	flex: 1 1 auto
+	min-width: 0
+
+.chatbot-footer .form-select
+	max-width: 220px
+
+.chatbot-footer label
+	margin-bottom: 0.25rem
+
+.chatbot-screen
+	display: flex
+	flex-direction: column
+	height: 80vh
+	max-height: 800px
+	border: 1px solid #e3e6ea
+	border-radius: 8px
+	overflow: hidden
+	background: var(--chat-bg)
+
+.chatbot-messages
+	padding: 16px
+	flex: 1 1 auto
+	min-height: 0
 	overflow-y: auto
 	display: flex
 	flex-direction: column

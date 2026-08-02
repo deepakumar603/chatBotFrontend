@@ -1,7 +1,12 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+interface ModelOption {
+  provider: string;
+  model: string;
+}
 
 @Component({
   standalone: true,
@@ -10,12 +15,46 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.sass']
 })
-export class ChatbotComponent {
+export class ChatbotComponent implements OnInit {
   messages: { from: 'user' | 'bot'; text: string }[] = [
     { from: 'bot', text: 'Hello! I am your assistant. How can I help?' },
   ];
   messageText = '';
   loading = false;
+  models: ModelOption[] = [];
+  selectedModel = '';
+  selectedProvider = '';
+
+  ngOnInit(): void {
+    this.loadModels();
+  }
+
+  async loadModels() {
+    try {
+      const response = await fetch('https://chat-bot-backend-three.vercel.app/api/models', {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to load models (${response.status})`);
+      }
+
+      const data = await response.json() as ModelOption[];
+      this.models = data || [];
+      const geminiModel = this.models.find((item) => item.provider.toLowerCase() === 'gemini');
+      this.selectedProvider = geminiModel?.provider || this.models[0]?.provider || '';
+      this.selectedModel = geminiModel?.model || this.models[0]?.model || '';
+    } catch (error) {
+      console.error('Unable to load models', error);
+      this.models = [];
+      this.selectedModel = '';
+    }
+  }
+
+  onModelChange(): void {
+    const selectedOption = this.models.find((option) => option.model === this.selectedModel);
+    this.selectedProvider = selectedOption?.provider || '';
+  }
 
   async send() {
     const message = this.messageText.trim();
@@ -29,7 +68,11 @@ export class ChatbotComponent {
       const response = await fetch('https://chat-bot-backend-three.vercel.app/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({
+          message,
+          provider: this.selectedProvider || undefined,
+          model: this.selectedModel || undefined,
+        }),
       });
 
       if (!response.ok) {

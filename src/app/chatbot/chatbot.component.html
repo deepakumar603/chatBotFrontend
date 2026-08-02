@@ -1,7 +1,7 @@
-<div class="chatbot-screen">
-	<header class="chatbot-header">Chatbot</header>
+<div class="chatbot-screen container py-3">
+	<header class="chatbot-header rounded-top px-3 py-2 mb-3">Chatbot</header>
 
-	<div class="chatbot-messages" role="log" aria-live="polite">
+	<div class="chatbot-messages border rounded p-3 bg-white" role="log" aria-live="polite">
 		<div *ngFor="let m of messages" class="message" [class.user]="m.from === 'user'" [class.bot]="m.from === 'bot'">
 			<div class="bubble" [innerHTML]="formatMessage(m.text)"></div>
 		</div>
@@ -13,8 +13,25 @@
 		</div>
 	</div>
 
-	<form class="chatbot-input" (ngSubmit)="send()">
-		<input name="chatMessage" type="text" placeholder="Type a message..." autocomplete="off" [(ngModel)]="messageText" [disabled]="loading" />
-		<button type="submit" [disabled]="loading || !messageText.trim()">{{ loading ? 'Waiting...' : 'Send' }}</button>
-	</form>
-</div>
+	<div class="chatbot-footer mt-3">
+		<div>
+			<label class="form-label small mb-1">Model</label>
+			<select
+				class="form-select form-select-sm"
+				[(ngModel)]="selectedModel"
+				name="selectedModel"
+				[disabled]="loading || models.length === 0"
+				(change)="onModelChange()"
+			>
+				<option value="" disabled>Select a model</option>
+				<option *ngFor="let option of models" [value]="option.model">
+					{{ option.provider }} - {{ option.model }}
+				</option>
+			</select>
+		</div>
+
+		<form class="chatbot-input input-group mt-0" (ngSubmit)="send()">
+			<input class="form-control" name="chatMessage" type="text" placeholder="Type a message..." autocomplete="off" [(ngModel)]="messageText" [disabled]="loading" />
+			<button class="btn btn-primary" type="submit" [disabled]="loading || !messageText.trim()">{{ loading ? 'Waiting...' : 'Send' }}</button>
+		</form>
+	</div>
