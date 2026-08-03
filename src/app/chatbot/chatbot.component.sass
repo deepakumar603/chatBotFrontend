@@ -38,8 +38,7 @@
 	display: flex
 	flex-wrap: nowrap
 	align-items: center
-	gap: 12px
-	padding: 14px 18px
+	gap: 8px
 	background: var(--chat-card)
 	border-top: 1px solid #e2e8f0
 
@@ -47,8 +46,8 @@
 	flex: 0 0 auto
 	min-width: 160px
 	border-left: 1px solid #e2e8f0
-	padding-left: 16px
-	margin-left: 10px
+	padding-left: 12px
+	margin-left: 8px
 
 .chatbot-footer .chatbot-input
 	flex: 1 1 auto
@@ -120,12 +119,11 @@
 
 .chatbot-input
 	display: flex
-	gap: 10px
-	width: 100%
+	gap: 8px
 
 .chatbot-input input
 	flex: 1 1 auto
-	padding: 14px 16px
+	padding: 12px 12px
 	border: 1px solid #dbeafe
 	border-radius: 999px
 	box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06)
@@ -138,9 +136,50 @@
 	border-radius: 999px
 	cursor: pointer
 	font-weight: 600
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	min-width: 48px
+	height: 40px
+
+.chatbot-input button .button-icon
+	font-size: 1.05rem
+	line-height: 1
 
 .chatbot-input button:active
 	transform: translateY(1px)
+
+.sr-only
+	position: absolute
+	width: 1px
+	height: 1px
+	padding: 0
+	margin: -1px
+	overflow: hidden
+	clip: rect(0, 0, 0, 0)
+	white-space: nowrap
+	border: 0
+
+@media (max-width: 640px)
+	.chatbot-footer
+		flex-direction: column
+		align-items: stretch
+		gap: 10px
+
+	.chatbot-footer .chatbot-input
+		width: 100%
+		margin-bottom: 0
+
+
+	.chatbot-input button
+		width: 48px
+		min-width: 48px
+		padding: 0
+		border-radius: 50%
+
+	.model-select-wrapper
+		width: 100%
+		border-left: none
 
 .loading-row
 	display: flex

@@ -16,7 +16,13 @@
 	<div class="chatbot-footer mt-3">
 		<form class="chatbot-input input-group mt-0" (ngSubmit)="send()">
 			<input class="form-control" name="chatMessage" type="text" placeholder="Type a message..." autocomplete="off" [(ngModel)]="messageText" [disabled]="loading" />
-			<button class="btn btn-primary" type="submit" [disabled]="loading || !messageText.trim()">{{ loading ? 'Waiting...' : 'Send' }}</button>
+			<button class="btn btn-primary send-button" type="submit" [disabled]="loading || !messageText.trim()">
+				<ng-container *ngIf="!loading">
+					<span class="button-icon" aria-hidden="true">➤</span>
+					<span class="sr-only">Send</span>
+				</ng-container>
+				<ng-container *ngIf="loading">Waiting...</ng-container>
+			</button>
 		</form>
 
 		<div class="model-select-wrapper">
