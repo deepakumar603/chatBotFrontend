@@ -17,7 +17,7 @@ interface ModelOption {
 })
 export class ChatbotComponent implements OnInit {
   messages: { from: 'user' | 'bot'; text: string }[] = [
-    { from: 'bot', text: 'Hello! I am your assistant. How can I help?' },
+    { from: 'bot', text: 'Hello! I am your chat assistant. How can I help?' },
   ];
   messageText = '';
   loading = false;
