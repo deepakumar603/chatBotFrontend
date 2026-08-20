@@ -2,6 +2,28 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
 
+## Data Flow Diagram
+
+```mermaid
+flowchart LR
+    U[User] -->|opens app /chatbot| A[Angular Frontend\napp.routes.ts]
+    A --> B[ChatbotComponent\nchatbot.component.ts]
+
+    B -->|GET /api/models| R[Remote Chat Backend\nhttps://chat-bot-backend-three.vercel.app]
+    B -->|POST message, provider, model| R
+    R -->|JSON model list| B
+    R -->|JSON bot reply| B
+    B -->|renders chat messages| U
+
+    subgraph LocalRepo[This Repository]
+        A
+        B
+    end
+
+    R -->|calls configured LLM provider| L[LLM provider via backend\nenvironment config]
+    L -->|response| R
+```
+
 ## Development server
 
 To start a local development server, run:
